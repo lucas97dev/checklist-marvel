@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marvel Checklist - Doomsday</title>
+    <title>Maratona Marvel - Rumo ao Doomsday</title>
     <style>
         * {
             margin: 0;
@@ -12,707 +12,187 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: radial-gradient(circle at top, #1a1a1a 0%, #000000 100%);
+            color: #eee;
             min-height: 100vh;
             padding: 20px;
-            color: #333;
+            line-height: 1.6;
         }
 
         .container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
         }
 
         header {
             text-align: center;
-            color: white;
-            margin-bottom: 30px;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.2);
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(226, 54, 54, 0.1);
+            border: 1px solid rgba(226, 54, 54, 0.3);
             border-radius: 20px;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
         }
 
         h1 {
-            font-size: 28px;
+            color: #e23636;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 2rem;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        .subtitle {
-            font-size: 14px;
-            opacity: 0.9;
+        .week-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-left: 5px solid #e23636;
+            transition: transform 0.3s ease;
         }
 
-        .progress-bar-container {
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 20px;
-            padding: 15px;
-            margin-top: 15px;
-        }
-
-        .progress-text {
-            font-size: 14px;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .progress-bar {
-            background: rgba(255, 255, 255, 0.4);
-            border-radius: 10px;
-            height: 20px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            background: linear-gradient(90deg, #4CAF50, #8BC34A);
-            height: 100%;
-            transition: width 0.3s ease;
-            border-radius: 10px;
-        }
-
-        .week-section {
-            margin-bottom: 30px;
+        .week-card:hover {
+            transform: translateX(10px);
+            background: rgba(255, 255, 255, 0.08);
         }
 
         .week-title {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 15px 20px;
-            border-radius: 15px;
+            font-weight: bold;
+            color: #e23636;
+            font-size: 1.2rem;
             margin-bottom: 15px;
-            font-size: 18px;
-            font-weight: 700;
-            color: #667eea;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
         }
 
-        .movie-card {
-            background: white;
-            border-radius: 15px;
-            margin-bottom: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s, box-shadow 0.2s, opacity 0.3s;
+        .movie-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: rgba(0,0,0,0.3);
+            margin-bottom: 8px;
+            border-radius: 8px;
             cursor: pointer;
         }
 
-        .movie-card:active {
-            transform: scale(0.98);
-        }
-
-        .movie-card.watched {
-            opacity: 0.6;
-        }
-
-        .movie-card.watched .movie-poster {
-            filter: grayscale(50%);
-        }
-
-        .movie-content {
-            display: flex;
-            padding: 15px;
-            gap: 15px;
-        }
-
-        .movie-poster {
-            width: 80px;
-            height: 120px;
-            border-radius: 8px;
-            object-fit: cover;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            flex-shrink: 0;
-            transition: filter 0.3s;
+        .movie-item input {
+            margin-right: 15px;
+            accent-color: #e23636;
+            width: 18px;
+            height: 18px;
         }
 
         .movie-info {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+            flex-grow: 1;
         }
 
-        .movie-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: #333;
-            line-height: 1.3;
-        }
-
-        .movie-year {
-            font-size: 12px;
-            color: #999;
-            font-weight: 600;
-        }
-
-        .movie-overview {
-            font-size: 13px;
-            color: #666;
-            line-height: 1.5;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .checkbox-container {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: auto;
-            padding-top: 10px;
-        }
-
-        .checkbox-container input[type="checkbox"] {
-            width: 22px;
-            height: 22px;
-            cursor: pointer;
-            accent-color: #667eea;
-        }
-
-        .checkbox-label {
-            font-size: 14px;
-            font-weight: 600;
-            color: #667eea;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .reset-button {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.5);
-            padding: 10px 20px;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        .reset-button:active {
-            transform: scale(0.95);
-        }
-
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            animation: fadeIn 0.3s;
-        }
-
-        .modal.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 20px;
-            max-width: 90%;
-            max-height: 85vh;
-            overflow-y: auto;
-            position: relative;
-            animation: slideUp 0.3s;
-            margin: 20px;
-        }
-
-        .modal-header {
-            position: sticky;
-            top: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 20px 20px 0 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 10;
-        }
-
-        .modal-close {
-            background: rgba(255, 255, 255, 0.3);
-            border: none;
-            color: white;
-            font-size: 28px;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            line-height: 1;
-        }
-
-        .modal-close:active {
-            transform: scale(0.9);
-        }
-
-        .modal-body {
-            padding: 20px;
-        }
-
-        .modal-poster {
-            width: 100%;
-            max-width: 300px;
-            border-radius: 15px;
-            margin: 0 auto 20px;
+        .movie-name {
             display: block;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            font-size: 1rem;
         }
 
-        .modal-title {
-            font-size: 24px;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 10px;
+        .tag {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            background: #444;
+            text-transform: uppercase;
+            margin-left: 10px;
         }
 
-        .modal-year {
-            font-size: 16px;
-            color: #999;
-            margin-bottom: 20px;
+        .crucial {
+            background: #e23636;
+            color: white;
         }
 
-        .modal-overview {
-            font-size: 16px;
-            line-height: 1.8;
+        .runtime {
+            color: #888;
+            font-size: 0.8rem;
+        }
+
+        /* Riscar texto quando marcado */
+        input:checked + .movie-info .movie-name {
+            text-decoration: line-through;
             color: #666;
-            text-align: justify;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideUp {
-            from { 
-                transform: translateY(50px);
-                opacity: 0;
-            }
-            to { 
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        @media (max-width: 400px) {
-            .movie-poster {
-                width: 70px;
-                height: 105px;
-            }
-            
-            .movie-title {
-                font-size: 14px;
-            }
-            
-            .movie-overview {
-                font-size: 12px;
-            }
-
-            .modal-content {
-                max-width: 95%;
-            }
-
-            .modal-title {
-                font-size: 20px;
-            }
-
-            .modal-overview {
-                font-size: 15px;
-            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🎬 Missão 18/12/2026</h1>
-            <p class="subtitle">Lucas e Quezia - Vingadores Doomsday</p>
-            <div class="progress-bar-container">
-                <div class="progress-text" id="progressText">0 de 28 filmes assistidos</div>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
-                </div>
+
+<div class="container">
+    <header>
+        <h1>MARVEL: RUMO AO DOOMSDAY</h1>
+        <p>Cronograma de Preparação - 3 Filmes/Semana</p>
+    </header>
+
+    <div class="week-card">
+        <div class="week-title"><span>SEMANA 01</span> <span class="runtime">± 6h</span></div>
+        <div class="movie-item">
+            <input type="checkbox">
+            <div class="movie-info">
+                <span class="movie-name">Homem de Ferro (2008) <span class="tag crucial">O Início</span></span>
             </div>
-            <button class="reset-button" onclick="resetProgress()">🔄 Resetar Progresso</button>
-        </header>
-
-        <div id="content"></div>
-
-        <!-- Modal -->
-        <div id="movieModal" class="modal" onclick="closeModalOnOutsideClick(event)">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modalTitle"></h2>
-                    <button class="modal-close" onclick="closeModal()">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <img id="modalPoster" class="modal-poster" src="" alt="">
-                    <div class="modal-year" id="modalYear"></div>
-                    <div class="modal-overview" id="modalOverview"></div>
-                </div>
+        </div>
+        <div class="movie-item">
+            <input type="checkbox">
+            <div class="movie-info">
+                <span class="movie-name">Homem de Ferro 2 (2010)</span>
+            </div>
+        </div>
+        <div class="movie-item">
+            <input type="checkbox">
+            <div class="movie-info">
+                <span class="movie-name">Thor (2011)</span>
             </div>
         </div>
     </div>
 
-    <script>
-        // ============================================
-        // ARMAZENAMENTO
-        // ============================================
-        const WATCHED_STORAGE_KEY = 'marvel_watched_movies_v2';
+    <div class="week-card">
+        <div class="week-title"><span>SEMANA 02</span> <span class="runtime">± 6h</span></div>
+        <div class="movie-item">
+            <input type="checkbox">
+            <div class="movie-info">
+                <span class="movie-name">Capitão América: O Primeiro Vingador (2011)</span>
+            </div>
+        </div>
+        <div class="movie-item">
+            <input type="checkbox">
+            <div class="movie-info">
+                <span class="movie-name">Os Vingadores (2012) <span class="tag crucial">Crossover</span></span>
+            </div>
+        </div>
+        <div class="movie-item">
+            <input type="checkbox">
+            <div class="movie-info">
+                <span class="movie-name">Homem de Ferro 3 (2013)</span>
+            </div>
+        </div>
+    </div>
 
-        function getWatchedMovies() {
-            const watched = localStorage.getItem(WATCHED_STORAGE_KEY);
-            return watched ? JSON.parse(watched) : {};
-        }
+    <div class="week-card">
+        <div class="week-title"><span>SEMANA 03</span> <span class="runtime">± 6h</span></div>
+        <div class="movie-item">
+            <input type="checkbox">
+            <div class="movie-info">
+                <span class="movie-name">Thor: O Mundo Sombrio (2013)</span>
+            </div>
+        </div>
+        <div class="movie-item">
+            <input type="checkbox">
+            <div class="movie-info">
+                <span class="movie-name">Capitão América 2: O Soldado Invernal (2014)</span>
+            </div>
+        </div>
+        <div class="movie-item">
+            <input type="checkbox">
+            <div class="movie-info">
+                <span class="movie-name">Guardiões da Galáxia (2014)</span>
+            </div>
+        </div>
+    </div>
 
-        function toggleWatched(movieId) {
-            const watched = getWatchedMovies();
-            watched[movieId] = !watched[movieId];
-            localStorage.setItem(WATCHED_STORAGE_KEY, JSON.stringify(watched));
-            updateProgress();
-            updateCardVisual(movieId);
-        }
+    </div>
 
-        function resetProgress() {
-            if (confirm('Tem certeza que deseja resetar todo o progresso?')) {
-                localStorage.removeItem(WATCHED_STORAGE_KEY);
-                location.reload();
-            }
-        }
-
-        // ============================================
-        // DADOS DOS FILMES (pré-carregados)
-        // ============================================
-        const marvelMovies = [
-            {
-                week: "Semana 1",
-                movies: [
-                    {
-                        title: "Homem de Ferro",
-                        year: 2008,
-                        overview: "Tony Stark é um industrial bilionário que também é o super-herói blindado Homem de Ferro. Quando é forçado a criar uma arma de destruição em massa, Tony usa seu brilhantismo para criar uma armadura de alta tecnologia e escapar.",
-                        poster: "https://image.tmdb.org/t/p/w200/78lPtwv72eTNqFW9COBYI0dWDJa.jpg"
-                    },
-                    {
-                        title: "Capitão América: O Primeiro Vingador",
-                        year: 2011,
-                        overview: "Steve Rogers, um jovem franzino, é transformado em super-soldado Capitão América para ajudar os EUA na Segunda Guerra Mundial. Ele deve impedir o vilão Red Skull de usar o Tesseract como arma de destruição.",
-                        poster: "https://image.tmdb.org/t/p/w200/vSNxAJTlD0r02V9sPYpOjqDZXUK.jpg"
-                    }
-                ]
-            },
-            {
-                week: "Semana 2",
-                movies: [
-                    {
-                        title: "Thor",
-                        year: 2011,
-                        overview: "O poderoso Thor é banido de Asgard e enviado à Terra após sua arrogância reacender uma guerra. Desprovido de seus poderes, ele deve provar ser digno enquanto enfrenta forças sombrias enviadas para destruí-lo.",
-                        poster: "https://image.tmdb.org/t/p/w200/prSfAi1xGrhLQNxVSUFh61xQ4Qy.jpg"
-                    },
-                    {
-                        title: "Os Vingadores",
-                        year: 2012,
-                        overview: "Nick Fury reúne uma equipe de super-heróis para formar os Vingadores e impedir que Loki e seu exército Chitauri escravizem a humanidade. Homem de Ferro, Thor, Hulk, Capitão América, Viúva Negra e Gavião Arqueiro devem aprender a trabalhar juntos.",
-                        poster: "https://image.tmdb.org/t/p/w200/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg"
-                    }
-                ]
-            },
-            {
-                week: "Semana 3",
-                movies: [
-                    {
-                        title: "Capitão América: O Soldado Invernal",
-                        year: 2014,
-                        overview: "Steve Rogers se adapta à vida moderna enquanto luta ao lado de Viúva Negra para expor uma conspiração dentro da S.H.I.E.L.D., enfrentando um assassino conhecido como o Soldado Invernal.",
-                        poster: "https://image.tmdb.org/t/p/w200/tVFRpFw3xTedgPGqxW0AOI8Qhh0.jpg"
-                    },
-                    {
-                        title: "Vingadores: Era de Ultron",
-                        year: 2015,
-                        overview: "Tony Stark tenta iniciar um programa de manutenção da paz, mas as coisas dão errado e os heróis mais poderosos da Terra devem parar o vilão Ultron de executar seu terrível plano.",
-                        poster: "https://image.tmdb.org/t/p/w200/4ssDuvEDkSArWEdyBl2X5EHvYKU.jpg"
-                    }
-                ]
-            },
-            {
-                week: "Semana 4",
-                movies: [
-                    {
-                        title: "Capitão América: Guerra Civil",
-                        year: 2016,
-                        overview: "Diferenças políticas colocam Capitão América e Homem de Ferro em campos opostos. Steve defende a liberdade dos heróis, enquanto Tony apoia a supervisão governamental, dividindo os Vingadores.",
-                        poster: "https://image.tmdb.org/t/p/w200/rAGiXaUfPu0sBqLjHevenimente.jpg"
-                    },
-                    {
-                        title: "Doutor Estranho",
-                        year: 2016,
-                        overview: "Após um acidente de carro que destrói suas mãos, o neurocirurgião Dr. Stephen Strange embarca em uma jornada de cura que o transforma no feiticeiro conhecido como Doutor Estranho.",
-                        poster: "https://image.tmdb.org/t/p/w200/gwi5kL7KXMQRIVRJd905ntftoS2.jpg"
-                    }
-                ]
-            },
-            {
-                week: "Semana 5",
-                movies: [
-                    {
-                        title: "Vingadores: Guerra Infinita",
-                        year: 2018,
-                        overview: "Os Vingadores e seus aliados devem estar dispostos a sacrificar tudo para derrotar o poderoso Thanos antes que ele destrua o universo com um estalar de dedos.",
-                        poster: "https://image.tmdb.org/t/p/w200/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg"
-                    },
-                    {
-                        title: "Vingadores: Ultimato",
-                        year: 2019,
-                        overview: "Após Thanos eliminar metade do universo, os Vingadores restantes se reúnem mais uma vez para reverter as ações do Titã Louco e restaurar o equilíbrio do universo.",
-                        poster: "https://image.tmdb.org/t/p/w200/or06FN3Dka5tukK1e9sl16pB3iy.jpg"
-                    }
-                ]
-            },
-            {
-                week: "Semana 6 (Séries)",
-                movies: [
-                    {
-                        title: "WandaVision",
-                        year: 2021,
-                        overview: "Wanda Maximoff e Visão vivem uma vida suburbana idílica até que começam a suspeitar que nem tudo é o que parece. A série mistura sitcoms clássicas com o Universo Cinematográfico Marvel.",
-                        poster: "https://image.tmdb.org/t/p/w200/glKDfE6btIRcVB5zrjspRIs4r52.jpg"
-                    },
-                    {
-                        title: "Loki - Temporada 1",
-                        year: 2021,
-                        overview: "Após roubar o Tesseract, Loki é levado pela Autoridade de Variância Temporal (TVA), uma organização burocrática que existe fora do tempo e espaço, forçado a corrigir a linha do tempo.",
-                        poster: "https://image.tmdb.org/t/p/w200/kEl2t3OhXc3Zb9FBh1AuYzRTgZp.jpg"
-                    },
-                    {
-                        title: "Loki - Temporada 2",
-                        year: 2023,
-                        overview: "Loki enfrenta suas maiores aventuras através do tempo e espaço, enquanto lida com as consequências de suas ações e o destino da própria realidade está em jogo.",
-                        poster: "https://image.tmdb.org/t/p/w200/7CqcXHJWT6K3RBcLLUxdYNUPQwM.jpg"
-                    }
-                ]
-            },
-            {
-                week: "Semana 7",
-                movies: [
-                    {
-                        title: "Homem-Aranha: Sem Volta Para Casa",
-                        year: 2021,
-                        overview: "Peter Parker pede ajuda ao Doutor Estranho para fazer o mundo esquecer que ele é o Homem-Aranha. Quando o feitiço dá errado, vilões de outras realidades começam a aparecer.",
-                        poster: "https://image.tmdb.org/t/p/w200/fVzXp3NwovUlZIS2fMr6W0P7MXxN.jpg"
-                    },
-                    {
-                        title: "Doutor Estranho no Multiverso da Loucura",
-                        year: 2022,
-                        overview: "O Doutor Estranho desencadeia um mal indescritível ao usar um feitiço proibido que abre o multiverso. Ele deve contar com aliados novos e misteriosos para enfrentar várias versões perigosas de si mesmo.",
-                        poster: "https://image.tmdb.org/t/p/w200/mzzNT7qLTx7ZFDzJ8kQmT3mPUqd.jpg"
-                    }
-                ]
-            },
-            {
-                week: "Semana 8",
-                movies: [
-                    {
-                        title: "Homem-Formiga e a Vespa: Quantumania",
-                        year: 2023,
-                        overview: "Scott Lang e Hope van Dyne, junto com a família, exploram o Reino Quântico, onde conhecem criaturas estranhas e embarcam em uma aventura que os levará além dos limites do possível.",
-                        poster: "https://image.tmdb.org/t/p/w200/ngl2FKBlU4fhbdsrtdom9LVLBXw.jpg"
-                    },
-                    {
-                        title: "Thunderbolts*",
-                        year: 2025,
-                        overview: "Um grupo de vilões e anti-heróis é recrutado pelo governo para missões perigosas. Com um elenco de personagens moralmente ambíguos, eles devem trabalhar juntos apesar de suas diferenças.",
-                        poster: "https://image.tmdb.org/t/p/w200/oTNMe7t7HQbALTle4g8ms0XsNNT.jpg"
-                    }
-                ]
-            },
-            {
-                week: "Semana 9",
-                movies: [
-                    {
-                        title: "Deadpool",
-                        year: 2016,
-                        overview: "Wade Wilson é um ex-operário de Forças Especiais que, após ser submetido a um experimento desonesto, desenvolve poderes de cura acelerados e adota o alter ego Deadpool.",
-                        poster: "https://image.tmdb.org/t/p/w200/3E53WEZJqP6aM84D8CckXx4pIHw.jpg"
-                    },
-                    {
-                        title: "Deadpool 2",
-                        year: 2018,
-                        overview: "Deadpool forma uma equipe de mutantes, a X-Force, para proteger um jovem mutante das garras do viajante do tempo Cable, enquanto mantém seu humor irreverente e violento.",
-                        poster: "https://image.tmdb.org/t/p/w200/to0spRl1CMDvyUbOnbb4fTk3VAd.jpg"
-                    }
-                ]
-            },
-            {
-                week: "Semana 10",
-                movies: [
-                    {
-                        title: "Deadpool & Wolverine",
-                        year: 2024,
-                        overview: "Deadpool une forças com Wolverine em uma aventura épica através do multiverso. A dupla improvável deve trabalhar junta para enfrentar uma ameaça que coloca todas as realidades em risco.",
-                        poster: "https://image.tmdb.org/t/p/w200/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg"
-                    },
-                    {
-                        title: "X-Men: Dias de um Futuro Esquecido",
-                        year: 2014,
-                        overview: "Os X-Men enviam Wolverine ao passado para mudar um evento histórico que poderia impactar globalmente humanos e mutantes, unindo as gerações clássica e moderna dos X-Men.",
-                        poster: "https://image.tmdb.org/t/p/w200/qppzSTAFiMktmLJdnVvtGMhNC7q.jpg"
-                    },
-                    {
-                        title: "Logan",
-                        year: 2017,
-                        overview: "Em um futuro próximo onde os mutantes estão quase extintos, um Wolverine cansado e envelhecido cuida do Professor X doente. Quando uma jovem mutante precisa de ajuda, Logan deve sair de seu exílio.",
-                        poster: "https://image.tmdb.org/t/p/w200/fnbjcRDYn6YviCcePDnGdyAkYsJ.jpg"
-                    }
-                ]
-            },
-            {
-                week: "Semana Final",
-                movies: [
-                    {
-                        title: "Quarteto Fantástico: Primeiros Passos",
-                        year: 2025,
-                        overview: "A primeira família de super-heróis da Marvel finalmente faz sua estreia no MCU. Reed Richards, Sue Storm, Johnny Storm e Ben Grimm embarcam em uma aventura cósmica que mudará suas vidas para sempre.",
-                        poster: "https://image.tmdb.org/t/p/w200/6RCf9jzKxyjblYV4CseayK0riu5.jpg"
-                    },
-                    {
-                        title: "Vingadores: Doomsday",
-                        year: 2026,
-                        overview: "O evento culminante que reunirá heróis de todo o multiverso para enfrentar a maior ameaça que já existiu. Os Vingadores devem se unir em uma batalha épica pelo destino de todas as realidades.",
-                        poster: "https://image.tmdb.org/t/p/w200/aEO4w9rVOPG4qXaFbYJqCjdRVBL.jpg"
-                    }
-                ]
-            }
-        ];
-
-        // ============================================
-        // MODAL
-        // ============================================
-        function openModal(movie) {
-            const modal = document.getElementById('movieModal');
-            document.getElementById('modalTitle').textContent = movie.title;
-            document.getElementById('modalPoster').src = movie.poster;
-            document.getElementById('modalPoster').alt = movie.title;
-            document.getElementById('modalYear').textContent = movie.year;
-            document.getElementById('modalOverview').textContent = movie.overview;
-            
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Previne scroll do body
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('movieModal');
-            modal.classList.remove('active');
-            document.body.style.overflow = ''; // Restaura scroll do body
-        }
-
-        function closeModalOnOutsideClick(event) {
-            if (event.target.id === 'movieModal') {
-                closeModal();
-            }
-        }
-
-        // ============================================
-        // RENDERIZAÇÃO
-        // ============================================
-        function createMovieCard(movie, index) {
-            const watched = getWatchedMovies();
-            const movieId = `movie_${index}`;
-            const isWatched = watched[movieId] || false;
-
-            return `
-                <div class="movie-card ${isWatched ? 'watched' : ''}" id="card_${movieId}">
-                    <div class="movie-content" onclick="openMovieModal(${index})">
-                        <img src="${movie.poster}" alt="${movie.title}" class="movie-poster" loading="lazy">
-                        <div class="movie-info">
-                            <div class="movie-title">${movie.title}</div>
-                            <div class="movie-year">${movie.year}</div>
-                            <div class="movie-overview">${movie.overview}</div>
-                            <div class="checkbox-container" onclick="event.stopPropagation()">
-                                <input 
-                                    type="checkbox" 
-                                    id="${movieId}" 
-                                    ${isWatched ? 'checked' : ''}
-                                    onchange="toggleWatched('${movieId}')"
-                                >
-                                <label for="${movieId}" class="checkbox-label">✓ Assistido</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function openMovieModal(index) {
-            let movieIndex = 0;
-            for (const weekData of marvelMovies) {
-                for (const movie of weekData.movies) {
-                    if (movieIndex === index) {
-                        openModal(movie);
-                        return;
-                    }
-                    movieIndex++;
-                }
-            }
-        }
-
-        function updateCardVisual(movieId) {
-            const card = document.getElementById('card_' + movieId);
-            const checkbox = document.getElementById(movieId);
-            if (checkbox.checked) {
-                card.classList.add('watched');
-            } else {
-                card.classList.remove('watched');
-            }
-        }
-
-        function updateProgress() {
-            const watched = getWatchedMovies();
-            const totalMovies = marvelMovies.reduce((sum, week) => sum + week.movies.length, 0);
-            const watchedCount = Object.values(watched).filter(Boolean).length;
-            const percentage = totalMovies > 0 ? (watchedCount / totalMovies) * 100 : 0;
-
-            document.getElementById('progressText').textContent = `${watchedCount} de ${totalMovies} filmes assistidos`;
-            document.getElementById('progressFill').style.width = `${percentage}%`;
-        }
-
-        function renderAllMovies() {
-            let movieIndex = 0;
-            let html = '';
-
-            for (const weekData of marvelMovies) {
-                html += `<div class="week-section">`;
-                html += `<div class="week-title">${weekData.week}</div>`;
-
-                for (const movie of weekData.movies) {
-                    html += createMovieCard(movie, movieIndex);
-                    movieIndex++;
-                }
-
-                html += `</div>`;
-            }
-
-            document.getElementById('content').innerHTML = html;
-            updateProgress();
-        }
-
-        // ============================================
-        // INICIALIZAÇÃO
-        // ============================================
-        window.addEventListener('DOMContentLoaded', function() {
-            renderAllMovies();
-        });
-    </script>
 </body>
 </html>
