@@ -3,196 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maratona Marvel - Rumo ao Doomsday</title>
+    <title>Marvel Checklist - Doomsday 2026</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: radial-gradient(circle at top, #1a1a1a 0%, #000000 100%);
             color: #eee;
-            min-height: 100vh;
             padding: 20px;
             line-height: 1.6;
         }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
+        .container { max-width: 700px; margin: 0 auto; }
         header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             padding: 30px;
             background: rgba(226, 54, 54, 0.1);
             border: 1px solid rgba(226, 54, 54, 0.3);
             border-radius: 20px;
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(10px);
         }
-
-        h1 {
-            color: #e23636;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
-
+        h1 { color: #e23636; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 5px; }
+        .progress-container { background: #333; height: 10px; border-radius: 5px; margin-top: 15px; overflow: hidden; }
+        .progress-bar { background: #e23636; width: 0%; height: 100%; transition: width 0.3s; }
+        
         .week-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 25px;
-            border-left: 5px solid #e23636;
-            transition: transform 0.3s ease;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-left: 4px solid #444;
         }
-
-        .week-card:hover {
-            transform: translateX(10px);
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .week-title {
-            font-weight: bold;
-            color: #e23636;
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-        }
-
+        .week-card:has(input:checked) { border-left-color: #e23636; }
+        .week-title { color: #e23636; font-weight: bold; margin-bottom: 10px; display: flex; justify-content: space-between; }
+        
         .movie-item {
             display: flex;
             align-items: center;
             padding: 10px;
-            background: rgba(0,0,0,0.3);
-            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            margin-bottom: 5px;
             border-radius: 8px;
-            cursor: pointer;
+            transition: 0.2s;
         }
-
-        .movie-item input {
-            margin-right: 15px;
-            accent-color: #e23636;
-            width: 18px;
-            height: 18px;
-        }
-
-        .movie-info {
-            flex-grow: 1;
-        }
-
-        .movie-name {
-            display: block;
-            font-size: 1rem;
-        }
-
-        .tag {
-            font-size: 0.7rem;
-            padding: 2px 8px;
-            border-radius: 10px;
-            background: #444;
-            text-transform: uppercase;
-            margin-left: 10px;
-        }
-
-        .crucial {
-            background: #e23636;
-            color: white;
-        }
-
-        .runtime {
-            color: #888;
-            font-size: 0.8rem;
-        }
-
-        /* Riscar texto quando marcado */
-        input:checked + .movie-info .movie-name {
-            text-decoration: line-through;
-            color: #666;
-        }
+        .movie-item:hover { background: rgba(255, 255, 255, 0.1); }
+        input[type="checkbox"] { margin-right: 12px; accent-color: #e23636; width: 18px; height: 18px; cursor: pointer; }
+        
+        .movie-info { flex-grow: 1; display: flex; align-items: center; justify-content: space-between; }
+        input:checked + .movie-info { text-decoration: line-through; opacity: 0.5; }
+        
+        .tag { font-size: 0.65rem; padding: 2px 7px; border-radius: 5px; background: #444; color: #fff; margin-left: 8px; }
+        .crucial { background: #e23636; }
+        .multiverso { background: #764ba2; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <header>
-        <h1>MARVEL: RUMO AO DOOMSDAY</h1>
-        <p>Cronograma de Preparação - 3 Filmes/Semana</p>
+        <h1>MARVEL DOOMSDAY</h1>
+        <p>Road to Victory - 2026</p>
+        <div class="progress-container"><div class="progress-bar" id="pb"></div></div>
     </header>
 
-    <div class="week-card">
-        <div class="week-title"><span>SEMANA 01</span> <span class="runtime">± 6h</span></div>
-        <div class="movie-item">
-            <input type="checkbox">
-            <div class="movie-info">
-                <span class="movie-name">Homem de Ferro (2008) <span class="tag crucial">O Início</span></span>
-            </div>
+    <div id="checklist">
+        <div class="week-card">
+            <div class="week-title">SEMANA 01 <span>Fase 1</span></div>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Homem de Ferro (2008) <span class="tag crucial">Tony Stark</span></div></label>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Homem de Ferro 2 (2010)</div></label>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Thor (2011)</div></label>
         </div>
-        <div class="movie-item">
-            <input type="checkbox">
-            <div class="movie-info">
-                <span class="movie-name">Homem de Ferro 2 (2010)</span>
-            </div>
-        </div>
-        <div class="movie-item">
-            <input type="checkbox">
-            <div class="movie-info">
-                <span class="movie-name">Thor (2011)</span>
-            </div>
-        </div>
-    </div>
 
-    <div class="week-card">
-        <div class="week-title"><span>SEMANA 02</span> <span class="runtime">± 6h</span></div>
-        <div class="movie-item">
-            <input type="checkbox">
-            <div class="movie-info">
-                <span class="movie-name">Capitão América: O Primeiro Vingador (2011)</span>
-            </div>
+        <div class="week-card">
+            <div class="week-title">SEMANA 02 <span>Fase 1</span></div>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Capitão América: O Primeiro Vingador (2011)</div></label>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Os Vingadores (2012) <span class="tag crucial">Equipe</span></div></label>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Homem de Ferro 3 (2013)</div></label>
         </div>
-        <div class="movie-item">
-            <input type="checkbox">
-            <div class="movie-info">
-                <span class="movie-name">Os Vingadores (2012) <span class="tag crucial">Crossover</span></span>
-            </div>
-        </div>
-        <div class="movie-item">
-            <input type="checkbox">
-            <div class="movie-info">
-                <span class="movie-name">Homem de Ferro 3 (2013)</span>
-            </div>
-        </div>
-    </div>
 
-    <div class="week-card">
-        <div class="week-title"><span>SEMANA 03</span> <span class="runtime">± 6h</span></div>
-        <div class="movie-item">
-            <input type="checkbox">
-            <div class="movie-info">
-                <span class="movie-name">Thor: O Mundo Sombrio (2013)</span>
-            </div>
+        <div class="week-card">
+            <div class="week-title">SEMANA 03 <span>Fase 2</span></div>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Thor: O Mundo Sombrio (2013)</div></label>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Capitão América 2: O Soldado Invernal (2014)</div></label>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Guardiões da Galáxia (2014)</div></label>
         </div>
-        <div class="movie-item">
-            <input type="checkbox">
-            <div class="movie-info">
-                <span class="movie-name">Capitão América 2: O Soldado Invernal (2014)</span>
-            </div>
-        </div>
-        <div class="movie-item">
-            <input type="checkbox">
-            <div class="movie-info">
-                <span class="movie-name">Guardiões da Galáxia (2014)</span>
-            </div>
-        </div>
-    </div>
 
+        <div class="week-card">
+            <div class="week-title">SEMANA 04 <span>Fase 2</span></div>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Vingadores: Era de Ultron (2015) <span class="tag crucial">Visão</span></div></label>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Homem-Formiga (2015)</div></label>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Capitão América: Guerra Civil (2016) <span class="tag crucial">Divisão</span></div></label>
+        </div>
+
+        <div class="week-card">
+            <div class="week-title">SEMANA 05 <span>Fase 3</span></div>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Doutor Estranho (2016)</div></label>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Guardiões da Galáxia Vol. 2 (2017)</div></label>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Homem-Aranha: De Volta ao Lar (2017)</div></label>
+        </div>
+
+        <div class="week-card">
+            <div class="week-title">SEMANA 06 <span>Fase 3</span></div>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Thor: Ragnarok (2017)</div></label>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Pantera Negra (2018)</div></label>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Vingadores: Guerra Infinita (2018) <span class="tag crucial">Épico</span></div></label>
+        </div>
+
+        <div class="week-card">
+            <div class="week-title">SEMANA 07 <span>Fase 3</span></div>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Homem-Formiga e a Vespa (2018)</div></label>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Capitã Marvel (2019)</div></label>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Vingadores: Ultimato (2019) <span class="tag crucial">Fim</span></div></label>
+        </div>
+
+        <div class="week-card">
+            <div class="week-title">SEMANA 08 <span>Saga Multiverso</span></div>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Homem-Aranha: Longe de Casa (2019)</div></label>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">WandaVision (Série) <span class="tag multiverso">Magia</span></div></label>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Viúva Negra (2021)</div></label>
+        </div>
+
+        <div class="week-card">
+            <div class="week-title">SEMANA 09 <span>Saga Multiverso</span></div>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Loki (Série - Temps 1 e 2) <span class="tag crucial">Tempo</span></div></label>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Shang-Chi e a Lenda dos Dez Anéis (2021)</div></label>
+        </div>
+
+        <div class="week-card">
+            <div class="week-title">SEMANA 10 <span>Fase 4/5</span></div>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Eternos (2021)</div></label>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Homem-Aranha: Sem Volta para Casa (2021) <span class="tag multiverso">Multiverso</span></div></label>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Doutor Estranho no Multiverso da Loucura (2022)</div></label>
+        </div>
+
+        <div class="week-card">
+            <div class="week-title">SEMANA 11 <span>Fase 5</span></div>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Thor: Amor e Trovão (2022)</div></label>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Pantera Negra: Wakanda Para Sempre (2022)</div></label>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Homem-Formiga e a Vespa: Quantumania (2023)</div></label>
+        </div>
+
+        <div class="week-card">
+            <div class="week-title">SEMANA 12 <span>Fase 5/6</span></div>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Guardiões da Galáxia Vol. 3 (2023)</div></label>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Deadpool & Wolverine (2024) <span class="tag crucial">X-Men</span></div></label>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Capitão América: Admirável Mundo Novo (2025)</div></label>
+        </div>
+
+        <div class="week-card">
+            <div class="week-title">SEMANA 13 <span>O DESTINO</span></div>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Thunderbolts* (2025)</div></label>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Quarteto Fantástico: Primeiros Passos (2025) <span class="tag crucial">DR. DOOM</span></div></label>
+            <label class="movie-item"><input type="checkbox" onchange="update()"> <div class="movie-info">Vingadores: Doomsday (2026)</div></label>
+        </div>
     </div>
+</div>
+
+<script>
+    function update() {
+        const total = document.querySelectorAll('input[type="checkbox"]').length;
+        const checked = document.querySelectorAll('input[type="checkbox"]:checked').length;
+        const perc = (checked / total) * 100;
+        document.getElementById('pb').style.width = perc + '%';
+    }
+</script>
 
 </body>
 </html>
